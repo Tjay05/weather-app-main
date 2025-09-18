@@ -21,4 +21,25 @@
     width: min(95%, 1200px);
     margin-inline: auto;
   }
+
+  .hidden {
+    display: none;
+  }
+
+  .drop-menu {
+    font-family: var(--font-dm-sans);
+    position: absolute;
+    background-color: var(--color-tneutral-800);
+    top: 3rem;
+    right: 0;
+    border-radius: .25rem;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .units {
+    /* background-color: var(--color-tneutral-700); */
+    border-radius: .25rem;
+    padding: 0.25rem 0.325rem;
+  }
 }

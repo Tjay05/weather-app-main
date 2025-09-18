@@ -22,27 +22,29 @@
     .attribution a { color: hsl(228, 45%, 44%); }
   </style>
 </head>
-<body>
-
-  Units
-
-  Switch to Imperial/Metric
-
-  Temperature
-
-  Celsius (°C)
-  Fahrenheit (°F)
-
-  Wind Speed
-
-  km/h
-  mph
-
-  Precipitation
-
-  Millimeters (mm)
-  Inches (in)
-
+<body class="bg-tneutral-900 text-tneutral-0">
+  <header class="rule">
+    <nav class="nav flex items-center justify-between py-3 relative">
+      <img src="assets/images/logo.svg" alt="logo" class="w-1/3">
+      <button id="chevron" class="rounded bg-tneutral-800 py-1 px-2 flex items-center gap-1 font-dm-sans text-sm justify-between">
+        <img src="assets/images/icon-units.svg" alt="units" class="">
+        Units
+        <img src="assets/images/icon-dropdown.svg" alt="dropdown">
+      </button>
+      <ul class="hidden" id="dropdown-menu">
+        <li class="text-base units">Switch to Imperial/Metric</li>
+        <li class="text-tneutral-300 units">Temperature</li>
+        <li class="units">Celsius (°C)</li>
+        <li class="units">Fahrenheit (°F)</li>
+        <li class="text-tneutral-300 units border-t-tneutral-600 border-t-1 rounded-none pt-2">Wind Speed</li>
+        <li class="units">km/h</li>
+        <li class="units">mph</li>
+        <li class="text-tneutral-300 units border-t-tneutral-600 border-t-1 rounded-none pt-2">Precipitation</li>
+        <li class="units">Millimeters (mm)</li>
+        <li class="units">Inches (in)</li>
+      </ul>
+    </nav>
+  </header>
   How's the sky looking today?
 
   Search for a city, e.g., New York
@@ -70,5 +72,7 @@
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
     Coded by <a href="#">Your Name Here</a>.
   </div>
+
+  <script defer src="src/index.js"></script>
 </body>
 </html>

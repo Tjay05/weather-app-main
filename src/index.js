@@ -1,10 +1,20 @@
-const chevron = document.getElementById('chevron');
-const dropMenu = document.getElementById('dropdown-menu');
+const navChevron = document.getElementById('nav-chevron');
+const navDropMenu = document.getElementById('nav-dropdown-menu');
+const dayDropMenu = document.getElementById('day-dropdown-menu');
+const dayChevron = document.getElementById('day-chevron');
 
-chevron.addEventListener('click', function () {
-  if (dropMenu.className === 'hidden') {
-    dropMenu.className = 'drop-menu'
+navChevron.addEventListener('click', function () {
+  if (navDropMenu.className === 'hidden') {
+    navDropMenu.className = 'drop-menu';
   } else {
-    dropMenu.className = 'hidden'
+    navDropMenu.className = 'hidden';
   }
-})
+});
+
+dayChevron.addEventListener('click', function () {
+  if (dayDropMenu.className === 'hidden') {
+    dayDropMenu.className = 'drop-menu';
+  } else {
+    dayDropMenu.className = 'hidden';
+  }
+});

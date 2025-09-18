@@ -7,13 +7,16 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
-    --color-red-500: oklch(63.7% 0.237 25.331);
-    --color-amber-100: oklch(96.2% 0.059 95.617);
-    --color-amber-400: oklch(82.8% 0.189 84.429);
-    --text-2xl: 1.5rem;
-    --text-2xl--line-height: calc(2 / 1.5);
+    --spacing: 0.25rem;
+    --text-sm: 0.875rem;
+    --text-sm--line-height: calc(1.25 / 0.875);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+    --font-dm-sans: "DM Sans", sans-serif;
+    --color-tneutral-900: hsl(243, 96%, 9%);
+    --color-tneutral-800: hsl(243, 27%, 20%);
+    --color-tneutral-700: hsl(243, 23%, 24%);
+    --color-tneutral-0: hsl(0, 0%, 100%);
   }
 }
 @layer base {
@@ -171,8 +174,26 @@
   .contents {
     display: contents;
   }
+  .flex {
+    display: flex;
+  }
   .table {
     display: table;
+  }
+  .w-1 {
+    width: calc(var(--spacing) * 1);
+  }
+  .w-1\/2 {
+    width: calc(1/2 * 100%);
+  }
+  .w-1\/4 {
+    width: calc(1/4 * 100%);
+  }
+  .w-3 {
+    width: calc(var(--spacing) * 3);
+  }
+  .w-3\/4 {
+    width: calc(3/4 * 100%);
   }
   .border-collapse {
     border-collapse: collapse;
@@ -180,22 +201,55 @@
   .resize {
     resize: both;
   }
+  .items-center {
+    align-items: center;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+  .gap-1 {
+    gap: calc(var(--spacing) * 1);
+  }
+  .rounded {
+    border-radius: 0.25rem;
+  }
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
-  .bg-amber-100 {
-    background-color: var(--color-amber-100);
+  .bg-tneutral-700 {
+    background-color: var(--color-tneutral-700);
   }
-  .bg-amber-400 {
-    background-color: var(--color-amber-400);
+  .bg-tneutral-800 {
+    background-color: var(--color-tneutral-800);
   }
-  .text-2xl {
-    font-size: var(--text-2xl);
-    line-height: var(--tw-leading, var(--text-2xl--line-height));
+  .bg-tneutral-900 {
+    background-color: var(--color-tneutral-900);
   }
-  .text-red-500 {
-    color: var(--color-red-500);
+  .p-2 {
+    padding: calc(var(--spacing) * 2);
+  }
+  .px-2 {
+    padding-inline: calc(var(--spacing) * 2);
+  }
+  .py-1 {
+    padding-block: calc(var(--spacing) * 1);
+  }
+  .py-3 {
+    padding-block: calc(var(--spacing) * 3);
+  }
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
+  }
+  .font-dm-sans {
+    font-family: var(--font-dm-sans);
+  }
+  .text-sm {
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+  }
+  .text-tneutral-0 {
+    color: var(--color-tneutral-0);
   }
   .underline {
     text-decoration-line: underline;
@@ -206,6 +260,12 @@
   }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+}
+@layer components {
+  .rule {
+    width: min(95%, 1200px);
+    margin-inline: auto;
   }
 }
 @property --tw-border-style {

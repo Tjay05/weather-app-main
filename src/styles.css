@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+/* Custom Styles */
+@theme {
+  --font-dm-sans: "DM Sans", sans-serif;
+  --font-bricolage: "Bricolage Grotesque", sans-serif;
+  --color-tblue-500: hsl(233, 67%, 56%);
+  --color-tblue-600: hsl(248, 70%, 36%);
+  --color-torange-500: hsl(28, 100%, 52%);
+  --color-tneutral-900: hsl(243, 96%, 9%);
+  --color-tneutral-800: hsl(243, 27%, 20%);
+  --color-tneutral-700: hsl(243, 23%, 24%);
+  --color-tneutral-600: hsl(243, 23%, 30%);
+  --color-tneutral-300: hsl(240, 6%, 70%);
+  --color-tneutral-200: hsl(250, 6%, 84%);
+  --color-tneutral-0: hsl(0, 0%, 100%);
+}
+
+@layer components {
+  .rule {
+    width: min(95%, 1200px);
+    margin-inline: auto;
+  }
+}

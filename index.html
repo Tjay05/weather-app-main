@@ -26,12 +26,12 @@
   <header class="rule">
     <nav class="nav flex items-center justify-between py-3 relative">
       <img src="assets/images/logo.svg" alt="logo" class="w-1/3">
-      <button id="chevron" class="rounded bg-tneutral-800 py-1 px-2 flex items-center gap-1 font-dm-sans text-sm justify-between">
+      <button id="nav-chevron" class="rounded-lg bg-tneutral-800 py-2 px-2.5 cursor-pointer flex items-center gap-1 font-dm-sans text-sm justify-between">
         <img src="assets/images/icon-units.svg" alt="units" class="">
         Units
         <img src="assets/images/icon-dropdown.svg" alt="dropdown">
       </button>
-      <ul class="hidden" id="dropdown-menu">
+      <ul class="hidden" id="nav-dropdown-menu">
         <li class="text-base units">Switch to Imperial/Metric</li>
         <li class="text-tneutral-300 units">Temperature</li>
         <li class="units">Celsius (°C)</li>
@@ -45,33 +45,194 @@
       </ul>
     </nav>
   </header>
-  How's the sky looking today?
 
-  Search for a city, e.g., New York
-  Search
+  <main class="rule my-4">
+    <!-- Search section -->
+    <section class="my-4">
+      <h1 class="text-center font-bricolage text-6xl/17 font-bold">How's the sky looking today?</h1>
+      <div class="flex w-full flex-col gap-3 mt-10 mb-4">
+        <input
+          class="bg-tneutral-800 rounded-lg py-2 px-4 font-dm-sans"
+          type="search"
+          placeholder="Search for a city, e.g., New York"
+          id="search">
+        <button class="bg-tblue-500 rounded-lg py-2 px-4 font-dm-sans">Search</button>
+      </div>
+    </section>
+    <section class="my-8">
+      <!-- Location details -->
+      <div class="cta">
+        <div class="text-center">
+          <p class="text-2xl/10 font-bold">Berlin, Germany</p>
+          <p class="text-tneutral-200 text-sm">Tuesday, Aug 5, 2025</p>
+        </div>
+        <div class="flex w-full items-center justify-between">
+          <img src="assets/images/icon-sunny.webp" alt="sun" class="w-[40%]">
+          <p class="font-semibold font-bricolage text-7xl"><span class="italic">68 </span>°</p>
+        </div>
+      </div>
+      <!-- Today Forecasts -->
+      <div class="grid grid-cols-2 gap-3 my-8 font-dm-sans">
+        <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
+          <p class="text-tneutral-300 text-lg">Feels like</p>
+          <span class="text-tneutral-0 text-3xl mt-4">64°</span>
+        </div>
+        <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
+          <p class="text-tneutral-300 text-lg">Humidity</p>
+          <span class="text-tneutral-0 text-3xl mt-4">46%</span>
+        </div>
+        <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
+          <p class="text-tneutral-300 text-lg">Wind</p>
+          <span class="text-tneutral-0 text-3xl mt-4">9 mph</span>
+        </div>
+        <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
+          <p class="text-tneutral-300 text-lg">Precipitation</p>
+          <span class="text-tneutral-0 text-3xl mt-4">0 in</span>
+        </div>
+      </div>
+      <!-- Daily Forecast -->
+      <div class="my-8 font-dm-sans">
+        <h2 class="text-xl">Daily forecast</h2>
+        <div class="grid grid-cols-3 gap-y-4 gap-x-3 my-4">
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600">
+            <p class="text-lg">Tue</p>
+            <img src="assets/images/icon-rain.webp" alt="rain" class="">
+            <div class="flex justify-between items-center text-lg self-stretch mt-3">
+              <p class="text-tneutral-200">68°</p>
+              <p class="text-tneutral-300">57°</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600">
+            <p class="text-lg">Wed</p>
+            <img src="assets/images/icon-drizzle.webp" alt="drizzle" class="">
+            <div class="flex justify-between items-center text-lg self-stretch mt-3">
+              <p class="text-tneutral-200">70°</p>
+              <p class="text-tneutral-300">59°</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600">
+            <p class="text-lg">Thu</p>
+            <img src="assets/images/icon-sunny.webp" alt="sunny" class="">
+            <div class="flex justify-between items-center text-lg self-stretch mt-3">
+              <p class="text-tneutral-200">75°</p>
+              <p class="text-tneutral-300">57°</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600">
+            <p class="text-lg">Fri</p>
+            <img src="assets/images/icon-partly-cloudy.webp" alt="partly-cloudy" class="">
+            <div class="flex justify-between items-center text-lg self-stretch mt-3">
+              <p class="text-tneutral-200">77°</p>
+              <p class="text-tneutral-300">55°</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600">
+            <p class="text-lg">Sat</p>
+            <img src="assets/images/icon-storm.webp" alt="storm" class="">
+            <div class="flex justify-between items-center text-lg self-stretch mt-3">
+              <p class="text-tneutral-200">70°</p>
+              <p class="text-tneutral-300">59°</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600">
+            <p class="text-lg">Sun</p>
+            <img src="assets/images/icon-snow.webp" alt="snow" class="">
+            <div class="flex justify-between items-center text-lg self-stretch mt-3">
+              <p class="text-tneutral-200">77°</p>
+              <p class="text-tneutral-300">61°</p>
+            </div>
+          </div>
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600">
+            <p class="text-lg">Mon</p>
+            <img src="assets/images/icon-fog.webp" alt="fog" class="">
+            <div class="flex justify-between items-center text-lg self-stretch mt-3">
+              <p class="text-tneutral-200">75°</p>
+              <p class="text-tneutral-300">59°</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Hourly Forecast -->
+      <div class="my-8 font-dm-sans flex flex-col gap-4 bg-tneutral-800 rounded-2xl px-4 py-6">
+        <div class="flex items-center justify-between relative">
+          <h2 class="text-xl font-medium">Hourly forecast</h2>
+          <button id="day-chevron" class="flex items-center gap-3 bg-tneutral-600 rounded-lg py-2 font-medium text-tneutral-200 px-4 cursor-pointer">
+            Tuesday
+            <img src="assets/images/icon-dropdown.svg" alt="chevron" class="">
+          </button>
+          <ul id="day-dropdown-menu" class="hidden">
+            <li class="units pr-16">Monday</li>
+            <li class="units">Tuesday</li>
+            <li class="units">Wednesday</li>
+            <li class="units">Thursday</li>
+            <li class="units">Friday</li>
+            <li class="units">Saturday</li>
+            <li class="units">Sunday</li>
+          </ul>
+        </div>
+        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600">
+          <div class="flex items-center gap-2">
+            <img src="assets/images/icon-overcast.webp" alt="overcast" class="w-[13%]">
+            <p class="text-lg">3 PM</p>
+          </div>
+          <p class="text-tneutral-300 font-medium">68°</p>
+        </div>
+        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600">
+          <div class="flex items-center gap-2">
+            <img src="assets/images/icon-partly-cloudy.webp" alt="overcast" class="w-[13%]">
+            <p class="text-lg">4 PM</p>
+          </div>
+          <p class="text-tneutral-300 font-medium">68°</p>
+        </div>
+        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600">
+          <div class="flex items-center gap-2">
+            <img src="assets/images/icon-sunny.webp" alt="sunny" class="w-[13%]">
+            <p class="text-lg">5 PM</p>
+          </div>
+          <p class="text-tneutral-300 font-medium">68°</p>
+        </div>
+        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600">
+          <div class="flex items-center gap-2">
+            <img src="assets/images/icon-overcast.webp" alt="overcast" class="w-[13%]">
+            <p class="text-lg">6 PM</p>
+          </div>
+          <p class="text-tneutral-300 font-medium">66°</p>
+        </div>
+        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600">
+          <div class="flex items-center gap-2">
+            <img src="assets/images/icon-snow.webp" alt="snow" class="w-[13%]">
+            <p class="text-lg">7 PM</p>
+          </div>
+          <p class="text-tneutral-300 font-medium">66°</p>
+        </div>
+        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600">
+          <div class="flex items-center gap-2">
+            <img src="assets/images/icon-fog.webp" alt="foggy" class="w-[13%]">
+            <p class="text-lg">8 PM</p>
+          </div>
+          <p class="text-tneutral-300 font-medium">64°</p>
+        </div>
+        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600">
+          <div class="flex items-center gap-2">
+            <img src="assets/images/icon-snow.webp" alt="overcast" class="w-[13%]">
+            <p class="text-lg">9 PM</p>
+          </div>
+          <p class="text-tneutral-300 font-medium">63°</p>
+        </div>
+        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600">
+          <div class="flex items-center gap-2">
+            <img src="assets/images/icon-overcast.webp" alt="overcast" class="w-[13%]">
+            <p class="text-lg">10 PM</p>
+          </div>
+          <p class="text-tneutral-300 font-medium">63°</p>
+        </div>
+    </section>
+  </main>
 
-  Feels like
-  <!-- Insert temperature here -->
-
-  Humidity
-  <!-- Insert humidity here -->
-
-  Wind
-  <!-- Insert wind here -->   
-  
-  Precipitation
-  <!-- Insert precipitation here -->
-
-  Daily forecast
-  <!-- Insert daily forecast for the next 7 days here -->
-
-  Hourly forecast
-  <!-- Insert hourly forecast for the selected day here -->
-
-  <div class="attribution">
+  <footer class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
+    Coded by <a href="github.com/Tjay05">Your Name Here</a>.
+  </footer>
 
   <script defer src="src/index.js"></script>
 </body>

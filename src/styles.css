@@ -30,16 +30,27 @@
     font-family: var(--font-dm-sans);
     position: absolute;
     background-color: var(--color-tneutral-800);
-    top: 3rem;
+    top: 3.5rem;
     right: 0;
-    border-radius: .25rem;
+    border-radius: .5rem;
     padding: 0.5rem;
     font-size: 0.875rem;
+    @apply border-1 border-tneutral-600
   }
 
   .units {
     /* background-color: var(--color-tneutral-700); */
     border-radius: .25rem;
     padding: 0.25rem 0.325rem;
+  }
+
+  .cta {
+    border-radius: 1rem;
+    padding: 2rem;
+    background-color: var(--color-tblue-500);
+    font-family: var(--font-dm-sans);
+    background-image: url(../assets/images/bg-today-large.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }

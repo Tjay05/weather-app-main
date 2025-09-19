@@ -25,7 +25,7 @@
 <body class="bg-tneutral-900 text-tneutral-0">
   <header class="rule">
     <nav class="nav flex items-center justify-between py-3 relative">
-      <img src="assets/images/logo.svg" alt="logo" class="w-1/3">
+      <img src="assets/images/logo.svg" alt="logo" class="w-1/3 md:w-[15%]">
       <button id="nav-chevron" class="rounded-lg bg-tneutral-800 py-2 px-2.5 cursor-pointer flex items-center gap-1 font-dm-sans text-sm justify-between">
         <img src="assets/images/icon-units.svg" alt="units" class="">
         Units
@@ -46,54 +46,56 @@
     </nav>
   </header>
 
-  <main class="rule my-4">
+  <main class="rule md:my-12">
     <!-- Search section -->
     <section class="my-4">
       <h1 class="text-center font-bricolage text-6xl/17 font-bold">How's the sky looking today?</h1>
-      <div class="flex w-full flex-col gap-3 mt-10 mb-4">
+      <div class="flex w-full md:w-1/2 md:mx-auto md:justify-between flex-col md:flex-row gap-3 mt-10 mb-4 relative">
         <input
-          class="bg-tneutral-800 rounded-lg py-2 px-4 font-dm-sans"
+          class="bg-tneutral-800 rounded-lg py-2 md:py-3 pl-10 font-dm-sans w-full text-tneutral-200"
           type="search"
           placeholder="Search for a city, e.g., New York"
-          id="search">
+          id="search"
+        >
+        <img src="assets/images/icon-search.svg" alt="search" class="absolute top-3 left-4 w-[15px] md:top-4">
         <button class="bg-tblue-500 rounded-lg py-2 px-4 font-dm-sans">Search</button>
       </div>
     </section>
-    <section class="my-8">
+    <section class="my-8 md:h-[664px] md:grid grid-cols-6 grid-rows-5 md:gap-6">
       <!-- Location details -->
-      <div class="cta">
-        <div class="text-center">
-          <p class="text-2xl/10 font-bold">Berlin, Germany</p>
-          <p class="text-tneutral-200 text-sm">Tuesday, Aug 5, 2025</p>
+      <div class="cta col-span-4 row-span-2 md:flex md:items-center md:justify-between md:w-full md:p-4">
+        <div class="text-center md:text-left">
+          <p class="text-2xl/10 md:text-3xl/12 font-bold">Berlin, Germany</p>
+          <p class="text-tneutral-200 text-sm md:text-base">Tuesday, Aug 5, 2025</p>
         </div>
-        <div class="flex w-full items-center justify-between">
+        <div class="flex items-center justify-between md:w-[35%]">
           <img src="assets/images/icon-sunny.webp" alt="sun" class="w-[40%]">
           <p class="font-semibold font-bricolage text-7xl"><span class="italic">68 </span>°</p>
         </div>
       </div>
       <!-- Today Forecasts -->
-      <div class="grid grid-cols-2 gap-3 my-8 font-dm-sans">
+      <div class="grid grid-cols-2 md:grid-cols-4 row-span-1 gap-3 md:gap-4 my-8 md:my-0 font-dm-sans col-span-4">
         <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
           <p class="text-tneutral-300 text-lg">Feels like</p>
-          <span class="text-tneutral-0 text-3xl mt-4">64°</span>
+          <span class="text-tneutral-200 text-3xl mt-4">64°</span>
         </div>
         <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
           <p class="text-tneutral-300 text-lg">Humidity</p>
-          <span class="text-tneutral-0 text-3xl mt-4">46%</span>
+          <span class="text-tneutral-200 text-3xl mt-4">46%</span>
         </div>
         <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
           <p class="text-tneutral-300 text-lg">Wind</p>
-          <span class="text-tneutral-0 text-3xl mt-4">9 mph</span>
+          <span class="text-tneutral-200 text-3xl mt-4">9 mph</span>
         </div>
         <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
           <p class="text-tneutral-300 text-lg">Precipitation</p>
-          <span class="text-tneutral-0 text-3xl mt-4">0 in</span>
+          <span class="text-tneutral-200 text-3xl mt-4">0 in</span>
         </div>
       </div>
       <!-- Daily Forecast -->
-      <div class="my-8 font-dm-sans">
+      <div class="my-8 md:mb-0 font-dm-sans col-span-4 row-span-2">
         <h2 class="text-xl">Daily forecast</h2>
-        <div class="grid grid-cols-3 gap-y-4 gap-x-3 my-4">
+        <div class="grid grid-cols-3 md:grid-cols-7 gap-y-4 gap-x-3 my-4">
           <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600">
             <p class="text-lg">Tue</p>
             <img src="assets/images/icon-rain.webp" alt="rain" class="">
@@ -153,7 +155,7 @@
         </div>
       </div>
       <!-- Hourly Forecast -->
-      <div class="my-8 font-dm-sans flex flex-col gap-4 bg-tneutral-800 rounded-2xl px-4 py-6">
+      <div class="my-8 md:my-0 font-dm-sans flex flex-col gap-4 bg-tneutral-800 rounded-2xl px-4 py-6 col-span-2 row-start-1 col-start-5 row-span-5">
         <div class="flex items-center justify-between relative">
           <h2 class="text-xl font-medium">Hourly forecast</h2>
           <button id="day-chevron" class="flex items-center gap-3 bg-tneutral-600 rounded-lg py-2 font-medium text-tneutral-200 px-4 cursor-pointer">

@@ -1,3 +1,4 @@
+// Dropdown handlers
 const navChevron = document.getElementById('nav-chevron');
 const navDropMenu = document.getElementById('nav-dropdown-menu');
 const dayDropMenu = document.getElementById('day-dropdown-menu');

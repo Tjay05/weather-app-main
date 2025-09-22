@@ -49,8 +49,6 @@
     padding: 2rem;
     background-color: var(--color-tblue-500);
     font-family: var(--font-dm-sans);
-    background-image: url(../assets/images/bg-today-large.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
+    @apply bg-[url(../assets/images/bg-today-small.svg)] md:bg-[url(../assets/images/bg-today-large.svg)] bg-cover bg-no-repeat
   }
 }

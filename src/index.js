@@ -5,17 +5,17 @@ const dayDropMenu = document.getElementById('day-dropdown-menu');
 const dayChevron = document.getElementById('day-chevron');
 
 navChevron.addEventListener('click', function () {
-  if (navDropMenu.className === 'hidden') {
-    navDropMenu.className = 'drop-menu';
+  if (navDropMenu.className === 'menu') {
+    navDropMenu.classList.add('drop-menu');
   } else {
-    navDropMenu.className = 'hidden';
+    navDropMenu.classList.remove('drop-menu');
   }
 });
 
 dayChevron.addEventListener('click', function () {
-  if (dayDropMenu.className === 'hidden') {
-    dayDropMenu.className = 'drop-menu';
+  if (dayDropMenu.className === 'menu') {
+    dayDropMenu.classList.add('drop-menu');
   } else {
-    dayDropMenu.className = 'hidden';
+    dayDropMenu.classList.remove('drop-menu');
   }
 });

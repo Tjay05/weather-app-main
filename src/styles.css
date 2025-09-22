@@ -22,12 +22,13 @@
     margin-inline: auto;
   }
 
-  .hidden {
+  .menu {
     display: none;
   }
 
-  .drop-menu {
+  .menu.drop-menu {
     font-family: var(--font-dm-sans);
+    display: inline-block;
     position: absolute;
     background-color: var(--color-tneutral-800);
     top: 3.5rem;
@@ -35,7 +36,7 @@
     border-radius: .5rem;
     padding: 0.5rem;
     font-size: 0.875rem;
-    @apply border-1 border-tneutral-600
+    @apply border-1 border-tneutral-600 z-99
   }
 
   .units {

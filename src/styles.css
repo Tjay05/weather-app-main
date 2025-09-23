@@ -69,4 +69,26 @@
     font-family: var(--font-dm-sans);
     @apply bg-[url(../assets/images/bg-today-small.svg)] md:bg-[url(../assets/images/bg-today-large.svg)] bg-cover bg-no-repeat
   }
+
+  .loader {
+    @apply px-1 py-7 border-t-tneutral-200 text-tneutral-200 relative
+  }
+
+  .loader::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 12px dotted var(--color-tneutral-0);
+    border-top: 12px dotted var(--color-tneutral-200);
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 }

@@ -68,39 +68,39 @@
     </section>
     <section class="my-8 md:h-[664px] md:grid grid-cols-6 grid-rows-5 md:gap-6">
       <!-- Location details -->
-      <!-- <div class="cta col-span-4 row-span-2 md:flex md:items-center md:justify-between md:w-full md:p-4">
+      <div class="cta col-span-4 row-span-2 md:flex md:items-center md:justify-between md:w-full md:p-4">
         <div class="text-center md:text-left">
-          <p class="text-2xl/10 md:text-3xl/12 font-bold">Berlin, Germany</p>
-          <p class="text-tneutral-200 text-sm md:text-base">Tuesday, Aug 5, 2025</p>
+          <p id="location" class="text-2xl/10 md:text-3xl/12 font-bold">Berlin, Germany</p>
+          <p id="time" class="text-tneutral-200 text-sm md:text-base">Tuesday, Aug 5, 2025</p>
         </div>
         <div class="flex items-center justify-between md:w-[35%]">
           <img src="assets/images/icon-sunny.webp" alt="sun" class="w-[40%]">
           <p class="font-semibold font-bricolage text-7xl"><span class="italic">68 </span>°</p>
         </div>
-      </div> -->
+      </div>
       
       <!-- Loading Container -->
-      <div class="col-span-4 row-span-2 flex items-center justify-center w-full md:p-4 font-bricolage font-bold bg-tneutral-800 rounded-2xl p-8">
+      <!-- <div class="col-span-4 row-span-2 flex items-center justify-center w-full md:p-4 font-bricolage font-bold bg-tneutral-800 rounded-2xl p-8">
         <p class="loader">Loading...</p>
-      </div>
+      </div> -->
 
       <!-- Today Forecasts -->
       <div class="grid grid-cols-2 md:grid-cols-4 row-span-1 gap-3 md:gap-4 my-8 md:my-0 font-dm-sans col-span-4">
         <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
           <p class="text-tneutral-300 text-lg">Feels like</p>
-          <span class="text-tneutral-200 text-3xl mt-4">-</span>
+          <span id="current-temp" class="text-tneutral-200 text-3xl mt-4">-</span>
         </div>
         <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
           <p class="text-tneutral-300 text-lg">Humidity</p>
-          <span class="text-tneutral-200 text-3xl mt-4">-</span>
+          <span id="current-humidity" class="text-tneutral-200 text-3xl mt-4">-</span>
         </div>
         <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
           <p class="text-tneutral-300 text-lg">Wind</p>
-          <span class="text-tneutral-200 text-3xl mt-4">-</span>
+          <span id="current-wind" class="text-tneutral-200 text-3xl mt-4">-</span>
         </div>
         <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
           <p class="text-tneutral-300 text-lg">Precipitation</p>
-          <span class="text-tneutral-200 text-3xl mt-4">-</span>
+          <span id="current-precip" class="text-tneutral-200 text-3xl mt-4">-</span>
         </div>
       </div>
       <!-- Daily Forecast -->

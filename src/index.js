@@ -10,9 +10,13 @@ const searchDrop = document.getElementById('search-dropdown-menu');
 
 navChevron.addEventListener('click', function () {
   if (navDropMenu.className === 'menu') {
+    navChevron.style.outlineWidth = '2px';
+    navChevron.style.outlineOffset = '2px';
+    navChevron.style.outlineStyle = 'solid';
     navDropMenu.classList.add('drop-menu');
   } else {
     navDropMenu.classList.remove('drop-menu');
+    navChevron.style.outlineStyle = 'unset';
   }
 });
 
@@ -36,11 +40,16 @@ search.addEventListener('click', () => {
 const currentLocation = document.getElementById('location');
 const currentTime = document.getElementById('time');
 const currentTemp = document.getElementById('current-temp');
+const currentFeel = document.getElementById('current-feel');
 const currentHum = document.getElementById('current-humidity');
 const currentWind = document.getElementById('current-wind');
 const currentPrecp = document.getElementById('current-precip');
 
-// Tumezone formatter 
+// daily forecats
+const dailyForecastContainer = document.getElementById('daily-forecast');
+
+
+// Timezone formatter 
 const formatTz = (tz) => {
   const [region, city] = tz.split("/");
   return `${city.replace(/_/g, " ")}, ${region}`;
@@ -58,38 +67,78 @@ const formatDate = (rawDate) => {
   return date.toLocaleDateString('en-US', options);
 }
 
+// Weather icon selector
+const selectWeatherIcon = (wc) => {
+  wc = Number(wc);
+  let src;
+
+  if (wc === 0) {
+    src = '../assets/images/icon-sunny.webp';
+  } else if (wc === 1 || wc === 2) {
+    src = '../assets/images/icon-partly-cloudy.webp';
+  } else if (wc === 3) {
+    src = '../assets/images/icon-overcast.webp';
+  } else if (wc === 45 || wc === 48) {
+    src = '../assets/images/icon-fog.webp';
+  } else if (wc >= 51 && wc <= 57) {
+    src = '../assets/images/icon-drizzle.webp';
+  } else if (wc >= 61 && wc <= 67) {
+    src = '../assets/images/icon-rain.webp';
+  } else if (wc >= 71 && wc <= 77) {
+    src = '../assets/images/icon-snow.webp';
+  } else if (wc >= 95) {
+    src = '../assets/images/icon-storm.webp';
+  }
+
+  return src;
+};
+
+const imperialUrl = 'https://api.open-meteo.com/v1/forecast?latitude=9.9285&longitude=8.8921&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch';
+
 // Imperial fetch function
 window.onload = () => {
-  fetchData();
+  fetchData(imperialUrl);
 }
 
-const fetchData = async () => {
+const fetchData = async (url) => {
   try {
-    const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=9.9285&longitude=8.8921&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch');
+    const res = await fetch(url);
     const data = await res.json();
+
     if (res.ok) {
       currentLocation.innerHTML = formatTz(data.timezone);
       currentTime.innerHTML = formatDate(data.current.time);
-      currentTemp.innerHTML = data.current.apparent_temperature + '°';
-      currentHum.innerHTML = data.current.relative_humidity_2m + '%';
-      currentWind.innerHTML = data.current.wind_speed_10m + ' mph';
-      currentPrecp.innerHTML = Math.round(data.current.precipitation * 100)/100 + ' in';
+      currentTemp.innerHTML = `${data.current.temperature_2m.toFixed(0)} `;
+      currentFeel.innerHTML = `${data.current.apparent_temperature} °`;
+      currentHum.innerHTML = `${data.current.relative_humidity_2m} %`;
+      currentWind.innerHTML = `${data.current.wind_speed_10m} mph`;
+      currentPrecp.innerHTML = `${Math.round(data.current.precipitation * 100)/100} in`;
+
+      const dailyDays = data.daily.time;
+      const dailyWeatherCode = data.daily.weather_code;
+      const dailyAppTempMin = data.daily.apparent_temperature_min;
+      const dailyAppTempMax = data.daily.apparent_temperature_max;
+
+      const dailyForecastHtml = await dailyDays.map((dateString, i) => {
+        const date = new Date(dateString);
+        const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
+        const weatherType = dailyWeatherCode[i];
+
+        return `
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600 min-h-[168px]">
+            <p class="text-lg">${weekday}</p>
+            <img src=${selectWeatherIcon(weatherType)} alt="" class="daily-icon">
+            <div class="flex justify-between items-center text-lg self-stretch mt-3">
+              <p class="text-tneutral-200">${dailyAppTempMax[i].toFixed(0)}°</p>
+              <p class="text-tneutral-300">${dailyAppTempMin[i].toFixed(0)}°</p>
+            </div>
+          </div>
+        `;
+      });
+
+      dailyForecastContainer.innerHTML = dailyForecastHtml.join("");
     }
   } catch (error) {
     console.log(error);
   }
-}
-
-
-// const fetchData = () => {
-//   fetch('https://api.open-meteo.com/v1/forecast?latitude=9.9285&longitude=8.8921&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch')
-//     .then(function(res){
-//       return res.json()
-//     })
-//     .then(function(data){
-//       console.log(data.timezone)
-//     })
-//     .catch(function(err){
-//       console.log(err)
-//     })
-// }
+};

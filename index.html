@@ -84,7 +84,7 @@
         <p class="loader">Loading...</p>
       </div> -->
 
-      <!-- Today Forecasts -->
+      <!-- Current Forecast -->
       <div class="grid grid-cols-2 md:grid-cols-4 row-span-1 gap-3 md:gap-4 my-8 md:my-0 font-dm-sans col-span-4">
         <div class="bg-tneutral-800 border-1 border-tneutral-600 p-4 flex flex-col rounded-2xl">
           <p class="text-tneutral-300 text-lg">Feels like</p>
@@ -121,68 +121,16 @@
       <div class="my-8 md:my-0 font-dm-sans flex flex-col gap-4 bg-tneutral-800 rounded-2xl px-4 py-6 col-span-2 row-start-1 col-start-5 row-span-5">
         <div class="flex items-center justify-between relative">
           <h2 class="text-xl font-medium">Hourly forecast</h2>
-          <button id="day-chevron" class="flex items-center gap-3 bg-tneutral-600 rounded-lg py-2 font-medium text-tneutral-200 px-4 cursor-pointer focus:outline-2 outline-offset-2">
-            --
-            <img src="assets/images/icon-dropdown.svg" alt="chevron" class="">
-          </button>
-          <ul id="day-dropdown-menu" class="menu">
-            <li class="units pr-16">Monday</li>
-            <li class="units">Tuesday</li>
-            <li class="units">Wednesday</li>
-            <li class="units">Thursday</li>
-            <li class="units">Friday</li>
-            <li class="units">Saturday</li>
-            <li class="units">Sunday</li>
-          </ul>
-        </div>
-        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]">
-          <div class="flex items-center gap-2">
-            <img src="" alt="" class="w-[13%]">
-            <p class="text-lg"></p>
-          </div>
-          <p class="text-tneutral-300 font-medium"></p>
-        </div>
-        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]">
-          <div class="flex items-center gap-2">
-            <img src="" alt="" class="w-[13%]">
-            <p class="text-lg"></p>
-          </div>
-          <p class="text-tneutral-300 font-medium"></p>
-        </div>
-        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]">
-          <div class="flex items-center gap-2">
-            <img src="" alt="" class="w-[13%]">
-            <p class="text-lg"></p>
-          </div>
-          <p class="text-tneutral-300 font-medium"></p>
-        </div>
-        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]">
-          <div class="flex items-center gap-2">
-            <img src="" alt="" class="w-[13%]">
-            <p class="text-lg"></p>
-          </div>
-          <p class="text-tneutral-300 font-medium"></p>
-        </div>
-        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]">
-          <div class="flex items-center gap-2">
-            <img src="" alt="" class="w-[13%]">
-            <p class="text-lg"></p>
-          </div>
-          <p class="text-tneutral-300 font-medium"></p>
-        </div>
-        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]">
-          <div class="flex items-center gap-2">
-            <img src="" alt="" class="w-[13%]">
-            <p class="text-lg"></p>
-          </div>
-          <p class="text-tneutral-300 font-medium"></p>
-        </div>
-        <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]">
-          <div class="flex items-center gap-2">
-            <img src="" alt="" class="w-[13%]">
-            <p class="text-lg"></p>
-          </div>
-          <p class="text-tneutral-300 font-medium"></p>
+          <select id="day-selector" class="bg-tneutral-600 rounded-lg py-2 font-medium text-tneutral-200 pl-2 cursor-pointer">
+            <option value="null">--</option>
+            <option value="mon">Monday</option>
+            <option value="tue">Tuesday</option>
+            <option value="wed">Wednesday</option>
+            <option value="thurs">Thursday</option>
+            <option value="fri">Friday</option>
+            <option value="sat">Saturday</option>
+            <option value="sun">Sunday</option>
+          </select>
         </div>
         <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]">
           <div class="flex items-center gap-2">

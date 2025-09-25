@@ -1,8 +1,7 @@
 // Dropdown handlers
 const navChevron = document.getElementById('nav-chevron');
 const navDropMenu = document.getElementById('nav-dropdown-menu');
-const dayDropMenu = document.getElementById('day-dropdown-menu');
-const dayChevron = document.getElementById('day-chevron');
+const daySelector = document.getElementById('day-selector');
 
 // Search handler
 const search = document.getElementById('search');
@@ -20,13 +19,7 @@ navChevron.addEventListener('click', function () {
   }
 });
 
-dayChevron.addEventListener('click', function () {
-  if (dayDropMenu.className === 'menu') {
-    dayDropMenu.classList.add('drop-menu');
-  } else {
-    dayDropMenu.classList.remove('drop-menu');
-  }
-});
+// daySelector.addEventListener('click', function () {});
 
 search.addEventListener('click', () => {
   if (searchDrop.className === 'search-menu') {

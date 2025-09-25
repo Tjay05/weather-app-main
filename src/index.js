@@ -38,9 +38,13 @@ const currentHum = document.getElementById('current-humidity');
 const currentWind = document.getElementById('current-wind');
 const currentPrecp = document.getElementById('current-precip');
 
-// daily forecats
+// daily 
 const dailyForecastContainer = document.getElementById('daily-forecast');
 
+// Hourly
+const hourlyForecastContainer = document.getElementById('hourly-forecast');
+
+const imperialUrl = 'https://api.open-meteo.com/v1/forecast?latitude=9.9285&longitude=8.8921&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch';
 
 // Timezone formatter 
 const formatTz = (tz) => {
@@ -79,6 +83,10 @@ const selectWeatherIcon = (wc) => {
     src = '../assets/images/icon-rain.webp';
   } else if (wc >= 71 && wc <= 77) {
     src = '../assets/images/icon-snow.webp';
+  } else if (wc >= 80 && wc <= 82) {
+    src = '../assets/images/icon-rain.webp';
+  } else if (wc === 85 || wc === 86) {
+    src = '../assets/images/icon-snow.webp';
   } else if (wc >= 95) {
     src = '../assets/images/icon-storm.webp';
   }
@@ -86,12 +94,12 @@ const selectWeatherIcon = (wc) => {
   return src;
 };
 
-const imperialUrl = 'https://api.open-meteo.com/v1/forecast?latitude=9.9285&longitude=8.8921&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch';
-
 // Imperial fetch function
 window.onload = () => {
   fetchData(imperialUrl);
 }
+
+let hourlyData = null;
 
 const fetchData = async (url) => {
   try {
@@ -99,6 +107,7 @@ const fetchData = async (url) => {
     const data = await res.json();
 
     if (res.ok) {
+      // Current forecast
       currentLocation.innerHTML = formatTz(data.timezone);
       currentTime.innerHTML = formatDate(data.current.time);
       currentTemp.innerHTML = `${data.current.temperature_2m.toFixed(0)} `;
@@ -107,6 +116,7 @@ const fetchData = async (url) => {
       currentWind.innerHTML = `${data.current.wind_speed_10m} mph`;
       currentPrecp.innerHTML = `${Math.round(data.current.precipitation * 100)/100} in`;
 
+      // Daily Forecast
       const dailyDays = data.daily.time;
       const dailyWeatherCode = data.daily.weather_code;
       const dailyAppTempMin = data.daily.apparent_temperature_min;
@@ -130,8 +140,65 @@ const fetchData = async (url) => {
       });
 
       dailyForecastContainer.innerHTML = dailyForecastHtml.join("");
+
+      // Hourly Forecast
+      hourlyData = data.hourly;
+      buildDay(data.hourly.time);
+      renderHourly(new Date().toISOString().split('T')[0]);
     }
   } catch (error) {
     console.log(error);
   }
 };
+
+const buildDay = (times) => {
+  const days = [...new Set(times.map(t => t.split('T')[0]))];
+
+  daySelector.innerHTML = days
+    .map(d => {
+      const dateObj = new Date(d);
+      const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'long' });
+      return `<option value=${d}>${dayName}</option>`
+    })
+    .join("");
+
+  daySelector.onchange = () => renderHourly(daySelector.value);
+}
+
+const renderHourly = (selectedDay) => {
+  const times = hourlyData.time;
+  const temps = hourlyData.apparent_temperature;
+  const codes = hourlyData.weather_code;
+
+  const items = times
+    .map((time, i) => ({
+      time,
+      temp: temps[i],
+      code: codes[i],
+    }))
+    .filter(item => item.time.startsWith(selectedDay));
+
+  const now = new Date();
+  let filteredItems = items;
+
+  if (selectedDay === now.toISOString().split("T")[0]) {
+    filteredItems = items.filter(it => new Date(it.time) >= now).slice(0, 8);
+  }
+
+  hourlyForecastContainer.innerHTML = filteredItems.map(item => {
+    const hour = new Date(item.time).toLocaleTimeString([], {
+      hour: 'numeric',
+      hour12: true,
+    });
+    
+    return `
+      <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]">
+        <div class="flex items-center gap-2">
+          <img src=${selectWeatherIcon(item.code)} alt="" class="w-[13%]">
+          <p class="text-lg">${hour}</p>
+        </div>
+        <p class="text-tneutral-300 font-medium">${item.temp.toFixed(0)}°</p>
+      </div>
+    `;
+  }).join("");
+}

@@ -70,6 +70,7 @@ const searchBtn = $("search-button");
 const searchDrop = $("search-dropdown-menu");
 
 const currentLocation = $("location");
+const currentIcon = $("location-icon");
 const currentTime = $("time");
 const currentTemp = $("current-temp");
 const currentFeel = $("current-feel");
@@ -165,6 +166,7 @@ const fetchData = async (lat, long, city) => {
 
 // Rendering Functions
 const renderCurrent = (current) => {
+  currentIcon.setAttribute("src", getWeatherIcon(current.weather_code));
   currentTime.textContent = formatDate(current.time);
   currentTemp.textContent = `${Math.round(current.temperature_2m)} `;
   currentFeel.textContent = `${Math.round(current.apparent_temperature)}°`;

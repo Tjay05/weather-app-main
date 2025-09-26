@@ -91,14 +91,17 @@ toggleDropdown(navChevron, navDropMenu, "drop-menu", true);
 toggleDropdown(search, searchDrop, "drop-menu");
 
 // Weather Data Fetching
-const imperialUrl =
-  "https://api.open-meteo.com/v1/forecast?latitude=9.9285&longitude=8.8921&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch";
+// default location Germany/Berlin
+let defLat = 52.5244;
+let defLong = 13.4105;
+
+// const imperialUrl = "https://api.open-meteo.com/v1/forecast?latitude=9.9285&longitude=8.8921&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch";
 
 let hourlyData = null;
 
-const fetchData = async (url) => {
+const fetchData = async (lat, long) => {
   try {
-    const res = await fetch(url);
+    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch`);
     const data = await res.json();
     if (!res.ok) throw new Error("Failed to fetch weather data");
 
@@ -196,4 +199,4 @@ const renderHourly = (selectedDay) => {
 // Helpers
 const getToday = () => new Date().toISOString().split("T")[0];
 
-window.onload = () => fetchData(imperialUrl);
+window.onload = () => fetchData(defLat, defLong);

@@ -39,22 +39,12 @@
     @apply border-1 border-tneutral-600 z-99
   }
 
-  .search-menu {
+  .search-menu:empty {
     display: none;
-    @apply font-dm-sans
   }
 
-  .search-menu.drop-menu {
-    font-family: var(--font-dm-sans);
-    display: inline-block;
-    position: absolute;
-    background-color: var(--color-tneutral-800);
-    top: 3.5rem;
-    right: 0;
-    border-radius: .5rem;
-    padding: 0.5rem;
-    font-size: 0.875rem;
-    @apply border-1 border-tneutral-600 z-99 w-full
+  .search-menu {
+    @apply font-dm-sans absolute bg-tneutral-800 top-[3.5rem] left-0 rounded-lg p-2 text-sm border-1 border-tneutral-600 z-99
   }
 
   .units {

@@ -1,5 +1,4 @@
 // Utility Functions
-
 // Element selector
 const $ = (id) => document.getElementById(id);
 
@@ -10,12 +9,6 @@ const toggleDropdown = (trigger, menu, activeClass = "drop-menu", outline = fals
 
     if (outline) trigger.style.outlineStyle = menu.classList.contains(activeClass) ? "solid"  : "unset";
   });
-};
-
-// Format timezone
-const formatTz = (tz) => {
-  const [region, city] = tz.split("/");
-  return `${city.replace(/_/g, " ")}, ${region}`;
 };
 
 // Format full date
@@ -72,7 +65,8 @@ const navChevron = $("nav-chevron");
 const navDropMenu = $("nav-dropdown-menu");
 const daySelector = $("day-selector");
 
-const search = $("search");
+const searchInput = $("search-input");
+const searchBtn = $("search-button");
 const searchDrop = $("search-dropdown-menu");
 
 const currentLocation = $("location");
@@ -88,22 +82,75 @@ const hourlyForecastContainer = $("hourly-forecast");
 
 // Dropdown Initializers
 toggleDropdown(navChevron, navDropMenu, "drop-menu", true);
-toggleDropdown(search, searchDrop, "drop-menu");
+
+// Match width
+function matchWidth () {
+  searchDrop.style.width = searchInput.offsetWidth + "px";
+}
 
 // Weather Data Fetching
 // default location Germany/Berlin
 let defLat = 52.5244;
 let defLong = 13.4105;
 
-// const imperialUrl = "https://api.open-meteo.com/v1/forecast?latitude=9.9285&longitude=8.8921&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch";
+// Location suggestions
+// fetch as user types
+searchInput.addEventListener("input", async () => {
+  const value = searchInput.value.trim();
+  if (value.length < 2) {
+    searchDrop.innerHTML = "";
+    return;
+  }
+
+  const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${value}&count=3`);
+  const data = await res.json();
+
+  if (data.results) {
+    searchDrop.innerHTML = data.results
+      .slice(0,3)
+      .map(result => `<li data-lat="${result.latitude}" data-long="${result.longitude}" data-name="${result.name}, ${result.country}" class="p-1 rounded-lg px-2 cursor-pointer hover:bg-tneutral-700 border-1 border-transparent hover:border-tneutral-600">${result.name}, ${result.country}</li>`)
+      .join("");
+  }
+});
+
+// handle click on suggestion
+searchDrop.addEventListener("click", (e) => {
+  if (e.target.tagName === 'LI') {
+    const lat = e.target.dataset.lat;
+    const long = e.target.dataset.long;
+    const name = e.target.dataset.name;
+    
+    searchInput.value = e.target.textContent;
+    searchDrop.innerHTML = "";
+    fetchData(lat, long, name);
+  }
+});
+
+// Handle serachBtn click
+searchBtn.addEventListener('click', async () => {
+  const value = searchInput.value.trim();
+  if (!value) return ;
+
+  const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${value}&count=1`);
+  const data = await res.json();
+  
+  if (data.results && data.results.length > 0) {
+    const { latitude, longitude, name, country } = data.results[0];
+    fetchData(latitude, longitude, `${name}, ${country}`);
+  } else {
+    alert('Location not found');
+  }
+})
 
 let hourlyData = null;
 
-const fetchData = async (lat, long) => {
+const fetchData = async (lat, long, city) => {
   try {
     const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch`);
     const data = await res.json();
     if (!res.ok) throw new Error("Failed to fetch weather data");
+
+    currentLocation.textContent = city;
 
     renderCurrent(data.current, data.timezone);
     renderDaily(data.daily);
@@ -117,8 +164,7 @@ const fetchData = async (lat, long) => {
 };
 
 // Rendering Functions
-const renderCurrent = (current, tz) => {
-  currentLocation.textContent = formatTz(tz);
+const renderCurrent = (current) => {
   currentTime.textContent = formatDate(current.time);
   currentTemp.textContent = `${Math.round(current.temperature_2m)} `;
   currentFeel.textContent = `${Math.round(current.apparent_temperature)}°`;
@@ -199,4 +245,8 @@ const renderHourly = (selectedDay) => {
 // Helpers
 const getToday = () => new Date().toISOString().split("T")[0];
 
-window.onload = () => fetchData(defLat, defLong);
+window.addEventListener('resize', matchWidth);
+window.onload = () => {
+  matchWidth();
+  fetchData(defLat, defLong, "Berlin, Germany");
+};

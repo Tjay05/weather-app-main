@@ -58,7 +58,7 @@ const WEATHER_ICONS = {
 };
 
 const getWeatherIcon = (wc) =>
-  `../assets/images/${WEATHER_ICONS[wc] || "icon-overcast.webp"}`;
+  `./assets/images/${WEATHER_ICONS[wc] || "icon-overcast.webp"}`;
 
 // DOM Elements
 const navChevron = $("nav-chevron");

@@ -30,6 +30,7 @@
     --radius-lg: 0.5rem;
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
+    --animate-spin: spin 1s linear infinite;
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
     --font-dm-sans: "DM Sans", sans-serif;
@@ -256,6 +257,9 @@
   .grid {
     display: grid;
   }
+  .hidden {
+    display: none;
+  }
   .table {
     display: table;
   }
@@ -277,17 +281,8 @@
   .w-\[15px\] {
     width: 15px;
   }
-  .w-\[40\%\] {
-    width: 40%;
-  }
-  .w-\[42\%\] {
-    width: 42%;
-  }
   .w-\[45\%\] {
     width: 45%;
-  }
-  .w-\[50\%\] {
-    width: 50%;
   }
   .w-full {
     width: 100%;
@@ -531,6 +526,12 @@
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
+  .before\:animate-spin {
+    &::before {
+      content: var(--tw-content);
+      animation: var(--animate-spin);
+    }
+  }
   .hover\:cursor-pointer {
     &:hover {
       @media (hover: hover) {
@@ -614,19 +615,9 @@
       width: 15%;
     }
   }
-  .md\:w-\[30\%\] {
-    @media (width >= 48rem) {
-      width: 30%;
-    }
-  }
   .md\:w-\[32\%\] {
     @media (width >= 48rem) {
       width: 32%;
-    }
-  }
-  .md\:w-\[35\%\] {
-    @media (width >= 48rem) {
-      width: 35%;
     }
   }
   .md\:w-full {
@@ -768,18 +759,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    border: 12px dotted var(--color-tneutral-0);
+    border: 12px dotted transparent;
     border-top: 12px dotted var(--color-tneutral-200);
     border-radius: 50%;
-    animation: spin 2s linear infinite;
-  }
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
   }
 }
 @property --tw-rotate-x {
@@ -869,6 +851,11 @@
   syntax: "*";
   inherits: false;
 }
+@property --tw-content {
+  syntax: "*";
+  initial-value: "";
+  inherits: false;
+}
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -898,6 +885,7 @@
       --tw-drop-shadow-color: initial;
       --tw-drop-shadow-alpha: 100%;
       --tw-drop-shadow-size: initial;
+      --tw-content: "";
     }
   }
 }

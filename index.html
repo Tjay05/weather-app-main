@@ -58,7 +58,7 @@
 
   <main id="main-content" class="rule md:my-12">
     <!-- Search input section -->
-    <section class="my-4">
+    <section id="search-section" class="my-4">
       <h1 class="text-center font-bricolage text-6xl/17 font-bold">How's the sky looking today?</h1>
       <div class="flex w-full md:w-1/2 md:mx-auto md:justify-between flex-col md:flex-row gap-3 mt-10 mb-4 relative">
         <input
@@ -73,6 +73,8 @@
         <button id="search-button" class="bg-tblue-500 rounded-xl py-2 px-4 font-dm-sans hover:cursor-pointer focus:outline-2 outline-offset-2 outline-tblue-500">Search</button>
       </div>
     </section>
+    <!-- No result State -->
+    <h1 id="no-results" class="font-bold hidden text-center text-2xl mt-8 mb-48">No search result found!</h1>
     <section id="pageSec" class="my-8 md:h-[664px] md:grid grid-cols-6 grid-rows-5 md:gap-6">
       <!-- Location details -->
       <div id="location-container" class="cta col-span-4 row-span-2 md:items-center md:justify-between md:w-full md:p-4">

@@ -68,12 +68,17 @@ const errorContainer = $("error-section");
 const retryBtn = $("api-btn");
 const errorMssg = $("api-error");
 const mainContainer = $("main-content");
+
 const searchInput = $("search-input");
 const searchBtn = $("search-button");
 const searchDrop = $("search-dropdown-menu");
 
+const noResult = $("no-results");
+const searchSect = $("search-section");
+const containersSec = $("pageSec");
 const locationContainer = $("location-container");
 const loadingContainer = $("loading-container");
+
 const currentLocation = $("location");
 const currentIcon = $("location-icon");
 const currentTime = $("time");
@@ -121,6 +126,8 @@ searchInput.addEventListener("input", async () => {
 
 // handle click on suggestion
 searchDrop.addEventListener("click", (e) => {
+  hideNoResult();
+
   if (e.target.tagName === 'LI') {
     const lat = e.target.dataset.lat;
     const long = e.target.dataset.long;
@@ -134,6 +141,7 @@ searchDrop.addEventListener("click", (e) => {
 
 // Handle serachBtn click
 searchBtn.addEventListener('click', async () => {
+  hideNoResult();
   const value = searchInput.value.trim();
   if (!value) return ;
 
@@ -144,7 +152,7 @@ searchBtn.addEventListener('click', async () => {
     const { latitude, longitude, name, country } = data.results[0];
     fetchData(latitude, longitude, `${name}, ${country}`);
   } else {
-    alert('Location not found');
+    showNoResult();
   }
 })
 
@@ -183,25 +191,38 @@ const fetchData = async (lat, long, city) => {
 const showLoader = () => {
   loadingContainer.classList.remove('hidden');
   locationContainer.classList.add('hidden');
-}
+};
 
 const hideLoader = () => {
   loadingContainer.classList.add('hidden');
   locationContainer.classList.remove('hidden');
   locationContainer.classList.add('md:flex');
-}
+};
 
 const showErrorMssg = (err) => {
   mainContainer.classList.add('hidden');
   errorMssg.textContent = err;
   errorContainer.classList.remove('hidden');
-}
+};
 
 const hideErrorMssg = () => {
   errorContainer.classList.add('hidden');
   errorMssg.textContent = "";
   mainContainer.classList.remove('hidden');
-}
+};
+
+const showNoResult =  () => {
+  searchDrop.innerHTML = "";
+  noResult.classList.remove('hidden');
+  containersSec.classList.remove('md:grid');
+  containersSec.classList.add('hidden');
+};
+
+const hideNoResult =  () => {
+  noResult.classList.add('hidden');
+  containersSec.classList.remove('hidden');
+  containersSec.classList.add('md:grid');
+};
 
 const renderCurrent = (current) => {
   currentIcon.setAttribute("src", getWeatherIcon(current.weather_code));

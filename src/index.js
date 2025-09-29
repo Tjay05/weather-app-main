@@ -64,6 +64,10 @@ const navChevron = $("nav-chevron");
 const navDropMenu = $("nav-dropdown-menu");
 const daySelector = $("day-selector");
 
+const errorContainer = $("error-section");
+const retryBtn = $("api-btn");
+const errorMssg = $("api-error");
+const mainContainer = $("main-content");
 const searchInput = $("search-input");
 const searchBtn = $("search-button");
 const searchDrop = $("search-dropdown-menu");
@@ -145,16 +149,19 @@ searchBtn.addEventListener('click', async () => {
 })
 
 let hourlyData = null;
-let error = null;
+let lastRequest = null;
 
 const fetchData = async (lat, long, city) => {
-  showLoader();
+  lastRequest = { lat, long, city };
 
   try {
+    showLoader();
+    hideErrorMssg();
+
     const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch`);
     const data = await res.json();
 
-    if (!res.ok) throw new Error("Failed to fetch weather data");
+    if (!res.ok) throw new Error("API call failed");
 
     currentLocation.textContent = city;
 
@@ -165,8 +172,8 @@ const fetchData = async (lat, long, city) => {
     buildDaySelector(hourlyData.time);
     renderHourly(getToday());
   } catch (err) {
-    error = err;
-    console.error(err);
+    showErrorMssg(err);
+    // console.error(err);
   } finally {
     hideLoader();
   }
@@ -182,6 +189,18 @@ const hideLoader = () => {
   loadingContainer.classList.add('hidden');
   locationContainer.classList.remove('hidden');
   locationContainer.classList.add('md:flex');
+}
+
+const showErrorMssg = (err) => {
+  mainContainer.classList.add('hidden');
+  errorMssg.textContent = err;
+  errorContainer.classList.remove('hidden');
+}
+
+const hideErrorMssg = () => {
+  errorContainer.classList.add('hidden');
+  errorMssg.textContent = "";
+  mainContainer.classList.remove('hidden');
 }
 
 const renderCurrent = (current) => {
@@ -265,6 +284,12 @@ const renderHourly = (selectedDay) => {
 
 // Helpers
 const getToday = () => new Date().toISOString().split("T")[0];
+
+retryBtn.addEventListener('click', () => {
+  if (lastRequest) {
+    fetchData(lastRequest.lat, lastRequest.long, lastRequest.city);
+  }
+});
 
 window.addEventListener('resize', matchWidth);
 

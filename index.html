@@ -46,7 +46,17 @@
     </nav>
   </header>
 
-  <main class="rule md:my-12">
+  <section id="error-section" class="hidden rule flex flex-col items-center font-dm-sans mt-18 text-center">
+    <img src="assets/images/icon-error.svg" alt="Error" class="w-[30px]">
+    <h1 class="font-bold text-2xl my-4 font-bricolage md:text-4xl">Something went wrong</h1>
+    <p class="text-tneutral-200">We couldn't connect to the server <span id="api-error"></span>. Please try again in a few moments.</p>
+    <button id="api-btn" class="bg-tneutral-800 rounded-lg py-1 px-3 flex items-center gap-2 my-4 mb-48 cursor-pointer">
+      <img src="assets/images/icon-retry.svg" alt="retry">
+      Retry
+    </button>
+  </section>
+
+  <main id="main-content" class="rule md:my-12">
     <!-- Search input section -->
     <section class="my-4">
       <h1 class="text-center font-bricolage text-6xl/17 font-bold">How's the sky looking today?</h1>

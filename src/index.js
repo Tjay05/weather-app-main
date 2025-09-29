@@ -1,4 +1,3 @@
-// Utility Functions
 // Element selector
 const $ = (id) => document.getElementById(id);
 
@@ -69,6 +68,8 @@ const searchInput = $("search-input");
 const searchBtn = $("search-button");
 const searchDrop = $("search-dropdown-menu");
 
+const locationContainer = $("location-container");
+const loadingContainer = $("loading-container");
 const currentLocation = $("location");
 const currentIcon = $("location-icon");
 const currentTime = $("time");
@@ -94,7 +95,7 @@ function matchWidth () {
 let defLat = 52.5244;
 let defLong = 13.4105;
 
-// Location suggestions
+// LOCATION SUGGESTIONS
 // fetch as user types
 searchInput.addEventListener("input", async () => {
   const value = searchInput.value.trim();
@@ -144,11 +145,15 @@ searchBtn.addEventListener('click', async () => {
 })
 
 let hourlyData = null;
+let error = null;
 
 const fetchData = async (lat, long, city) => {
+  showLoader();
+
   try {
     const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch`);
     const data = await res.json();
+
     if (!res.ok) throw new Error("Failed to fetch weather data");
 
     currentLocation.textContent = city;
@@ -160,11 +165,25 @@ const fetchData = async (lat, long, city) => {
     buildDaySelector(hourlyData.time);
     renderHourly(getToday());
   } catch (err) {
+    error = err;
     console.error(err);
+  } finally {
+    hideLoader();
   }
 };
 
 // Rendering Functions
+const showLoader = () => {
+  loadingContainer.classList.remove('hidden');
+  locationContainer.classList.add('hidden');
+}
+
+const hideLoader = () => {
+  loadingContainer.classList.add('hidden');
+  locationContainer.classList.remove('hidden');
+  locationContainer.classList.add('md:flex');
+}
+
 const renderCurrent = (current) => {
   currentIcon.setAttribute("src", getWeatherIcon(current.weather_code));
   currentTime.textContent = formatDate(current.time);
@@ -248,6 +267,7 @@ const renderHourly = (selectedDay) => {
 const getToday = () => new Date().toISOString().split("T")[0];
 
 window.addEventListener('resize', matchWidth);
+
 window.onload = () => {
   matchWidth();
   fetchData(defLat, defLong, "Berlin, Germany");

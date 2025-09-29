@@ -63,9 +63,9 @@
         <button id="search-button" class="bg-tblue-500 rounded-xl py-2 px-4 font-dm-sans hover:cursor-pointer focus:outline-2 outline-offset-2 outline-tblue-500">Search</button>
       </div>
     </section>
-    <section class="my-8 md:h-[664px] md:grid grid-cols-6 grid-rows-5 md:gap-6">
+    <section id="pageSec" class="my-8 md:h-[664px] md:grid grid-cols-6 grid-rows-5 md:gap-6">
       <!-- Location details -->
-      <div class="cta col-span-4 row-span-2 md:flex md:items-center md:justify-between md:w-full md:p-4">
+      <div id="location-container" class="cta col-span-4 row-span-2 md:items-center md:justify-between md:w-full md:p-4">
         <div class="text-center md:text-left">
           <p id="location" class="text-2xl/10 md:text-3xl/12 font-bold">Berlin, Germany</p>
           <p id="time" class="text-tneutral-200 text-sm md:text-base">Tuesday, Aug 5, 2025</p>
@@ -77,9 +77,9 @@
       </div>
       
       <!-- Loading Container -->
-      <!-- <div class="col-span-4 row-span-2 flex items-center justify-center w-full md:p-4 font-bricolage font-bold bg-tneutral-800 rounded-2xl p-8">
-        <p class="loader">Loading...</p>
-      </div> -->
+      <div id="loading-container" class="hidden col-span-4 row-span-2 flex items-center justify-center w-full md:p-4 font-bricolage font-bold bg-tneutral-800 rounded-2xl p-8">
+        <p class="loader before:animate-spin">Loading...</p>
+      </div>
 
       <!-- Current Forecast -->
       <div class="grid grid-cols-2 md:grid-cols-4 row-span-1 gap-3 md:gap-4 my-8 md:my-0 font-dm-sans col-span-4">
@@ -100,36 +100,38 @@
           <span id="current-precip" class="text-tneutral-200 text-3xl mt-4">-</span>
         </div>
       </div>
+
       <!-- Daily Forecast -->
       <div class="my-8 md:mb-0 font-dm-sans col-span-4 row-span-2">
         <h2 class="text-xl">Daily forecast</h2>
         <div id="daily-forecast" class="grid grid-cols-3 md:grid-cols-7 gap-y-4 gap-x-3 my-4">
-          <!-- <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600 min-h-[168px]">
-            <p class="text-lg"></p>
-            <img src="" alt="" class="daily-icon">
-            <div class="flex justify-between items-center text-lg self-stretch mt-3">
-              <p class="text-tneutral-200"></p>
-              <p class="text-tneutral-300"></p>
-            </div>
-          </div> -->
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600 min-h-[168px]"></div>
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600 min-h-[168px]"></div>
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600 min-h-[168px]"></div>
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600 min-h-[168px]"></div>
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600 min-h-[168px]"></div>
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600 min-h-[168px]"></div>
+          <div class="flex flex-col items-center bg-tneutral-800 rounded-2xl p-4 border-1 border-tneutral-600 min-h-[168px]"> </div>
         </div>
       </div>
+
       <!-- Hourly Forecast -->
       <div class="my-8 md:my-0 font-dm-sans flex flex-col gap-4 bg-tneutral-800 rounded-2xl px-4 py-6 col-span-2 row-start-1 col-start-5 row-span-5">
         <div class="flex items-center justify-between">
           <h2 class="text-xl font-medium">Hourly forecast</h2>
           <select id="day-selector" class="bg-tneutral-600 rounded-lg py-2 font-medium text-tneutral-200 pl-2 cursor-pointer">
-            <option value="null">--</option>
+            <option value="null">-</option>
           </select>
         </div>
         <div id="hourly-forecast" class="flex flex-col gap-4">
-          <!-- <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]">
-            <div class="flex items-center gap-2">
-              <img src="" alt="" class="w-[13%]">
-              <p class="text-lg"></p>
-            </div>
-            <p class="text-tneutral-300 font-medium"></p>
-          </div> -->
+          <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]"></div>
+          <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]"></div>
+          <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]"></div>
+          <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]"></div>
+          <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]"></div>
+          <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]"></div>
+          <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]"></div>
+          <div class="flex items-center justify-between rounded-lg bg-tneutral-700 px-3 py-2 border-1 border-tneutral-600 min-h-[56px]"></div>
         </div>
       </div>
     </section>

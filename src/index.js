@@ -113,14 +113,36 @@ searchInput.addEventListener("input", async () => {
     return;
   }
 
-  const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${value}&count=3`);
-  const data = await res.json();
+  // Show search in progress
+  searchDrop.innerHTML = `
+    <li class="p-1 rounded-lg px-2 flex items-center gap-2">
+      <img src='./assets/images/icon-loading.svg' alt='loading' class='' />
+      Search in progress
+    </li>
+  `;
 
-  if (data.results) {
-    searchDrop.innerHTML = data.results
-      .slice(0,3)
-      .map(result => `<li data-lat="${result.latitude}" data-long="${result.longitude}" data-name="${result.name}, ${result.country}" class="p-1 rounded-lg px-2 cursor-pointer hover:bg-tneutral-700 border-1 border-transparent hover:border-tneutral-600">${result.name}, ${result.country}</li>`)
-      .join("");
+  try {
+    const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${value}&count=3`);
+    const data = await res.json();
+
+    if (data.results) {
+      searchDrop.innerHTML = data.results
+        .slice(0,3)
+        .map(result => `<li data-lat="${result.latitude}" data-long="${result.longitude}" data-name="${result.name}, ${result.country}" class="p-1 rounded-lg px-2 cursor-pointer hover:bg-tneutral-700 border-1 border-transparent hover:border-tneutral-600">${result.name}, ${result.country}</li>`)
+        .join("");
+    } else {
+        searchDrop.innerHTML = `
+        <li class="p-1 rounded-lg px-2 text-tneutral-200">
+          No results found
+        </li>
+      `;
+    }
+  } catch (err) {
+      searchDrop.innerHTML = `
+        <li class="p-1 rounded-lg px-2 text-red-400">
+          Error fetching locations
+        </li>
+      `;
   }
 });
 

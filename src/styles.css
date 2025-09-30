@@ -50,6 +50,9 @@
   .units {
     border-radius: .25rem;
     padding: 0.25rem 0.325rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .cta {

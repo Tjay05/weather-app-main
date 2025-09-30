@@ -63,6 +63,7 @@ const getWeatherIcon = (wc) =>
 const navChevron = $("nav-chevron");
 const navDropMenu = $("nav-dropdown-menu");
 const daySelector = $("day-selector");
+const unitToggleBtn = $("unit-toggle");
 
 const errorContainer = $("error-section");
 const retryBtn = $("api-btn");
@@ -103,6 +104,7 @@ function matchWidth () {
 // default location Germany/Berlin
 let defLat = 52.5244;
 let defLong = 13.4105;
+let unitSystem = "metric";
 
 // LOCATION SUGGESTIONS
 // fetch as user types
@@ -181,21 +183,32 @@ searchBtn.addEventListener('click', async () => {
 let hourlyData = null;
 let lastRequest = null;
 
+const buildUrl = (lat, long) => {
+  const defaultUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto`;
+
+  if (unitSystem === "imperial") {
+    return `${defaultUrl}&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`;
+  } else {
+    return defaultUrl;
+  }
+};
+
 const fetchData = async (lat, long, city) => {
   lastRequest = { lat, long, city };
 
   try {
     showLoader();
     hideErrorMssg();
+    const url = buildUrl(lat, long);
 
-    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto&wind_speed_unit=mph&precipitation_unit=inch`);
+    const res = await fetch(url);
     const data = await res.json();
 
     if (!res.ok) throw new Error("API call failed");
 
     currentLocation.textContent = city;
 
-    renderCurrent(data.current, data.timezone);
+    renderCurrent(data.current, data.current_units);
     renderDaily(data.daily);
     hourlyData = data.hourly;
 
@@ -203,7 +216,6 @@ const fetchData = async (lat, long, city) => {
     renderHourly(getToday());
   } catch (err) {
     showErrorMssg(err);
-    // console.error(err);
   } finally {
     hideLoader();
   }
@@ -212,6 +224,7 @@ const fetchData = async (lat, long, city) => {
 // Rendering Functions
 const showLoader = () => {
   loadingContainer.classList.remove('hidden');
+  locationContainer.classList.remove('md:flex');
   locationContainer.classList.add('hidden');
 };
 
@@ -246,14 +259,14 @@ const hideNoResult =  () => {
   containersSec.classList.add('md:grid');
 };
 
-const renderCurrent = (current) => {
+const renderCurrent = (current, units) => {
   currentIcon.setAttribute("src", getWeatherIcon(current.weather_code));
   currentTime.textContent = formatDate(current.time);
   currentTemp.textContent = `${Math.round(current.temperature_2m)} `;
   currentFeel.textContent = `${Math.round(current.apparent_temperature)}°`;
   currentHum.textContent = `${current.relative_humidity_2m}%`;
-  currentWind.textContent = `${Math.round(current.wind_speed_10m)} mph`;
-  currentPrecp.textContent = `${(Math.round(current.precipitation * 100) / 100)} in`;
+  currentWind.textContent = `${Math.round(current.wind_speed_10m)} ${units.wind_speed_10m}`;
+  currentPrecp.textContent = `${(Math.round(current.precipitation * 100) / 100)} ${units.precipitation}`;
 };
 
 const renderDaily = (daily) => {
@@ -325,6 +338,27 @@ const renderHourly = (selectedDay) => {
     .join("");
 };
 
+// Update Unit Toggler
+const updateUnitBtnText = () => {
+  if (unitSystem === "metric") {
+    unitToggleBtn.textContent = "Switch to Imperial";
+  } else {
+    unitToggleBtn.textContent = "Switch to Metric";
+  }
+};
+
+unitToggleBtn.addEventListener('click', () => {
+  unitSystem = unitSystem === 'metric' ? 'imperial' : 'metric';
+  updateUnitBtnText();
+
+  navDropMenu.classList.toggle("drop-menu");
+  navChevron.style.outlineStyle = 'unset';
+
+  if (lastRequest) {
+    fetchData(lastRequest.lat, lastRequest.long, lastRequest.city);
+  }
+});
+
 // Helpers
 const getToday = () => new Date().toISOString().split("T")[0];
 
@@ -338,5 +372,6 @@ window.addEventListener('resize', matchWidth);
 
 window.onload = () => {
   matchWidth();
+  updateUnitBtnText();
   fetchData(defLat, defLong, "Berlin, Germany");
 };

@@ -32,7 +32,7 @@
         <img src="assets/images/icon-dropdown.svg" alt="dropdown">
       </button>
       <ul class="menu" id="nav-dropdown-menu">
-        <button class="text-base cursor-pointer focus:outline-1 outline-offset-1 units">Switch to Imperial/Metric</button>
+        <button id="unit-toggle" class="text-base cursor-pointer focus:outline-1 outline-offset-1 units"></button>
         <li class="text-tneutral-300 units">Temperature</li>
         <li class="units">Celsius (°C)</li>
         <li class="units">Fahrenheit (°F)</li>
@@ -75,6 +75,8 @@
     </section>
     <!-- No result State -->
     <h1 id="no-results" class="font-bold hidden text-center text-2xl mt-8 mb-48">No search result found!</h1>
+
+    <!-- Forecasts Containers -->
     <section id="pageSec" class="my-8 md:h-[664px] md:grid grid-cols-6 grid-rows-5 md:gap-6">
       <!-- Location details -->
       <div id="location-container" class="cta col-span-4 row-span-2 md:items-center md:justify-between md:w-full md:p-4">

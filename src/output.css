@@ -743,6 +743,9 @@
     align-items: center;
     justify-content: space-between;
   }
+  .units.selected {
+    background-color: var(--color-tneutral-700);
+  }
   .cta {
     border-radius: 1rem;
     padding: 2rem;

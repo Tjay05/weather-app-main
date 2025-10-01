@@ -105,6 +105,42 @@ function matchWidth () {
 let defLat = 52.5244;
 let defLong = 13.4105;
 let unitSystem = "metric";
+let unitSettings = {
+  temp: 'c',
+  wind: 'kmh',
+  precip: 'mm'
+};
+
+const createTickImg = () => {
+  const img = document.createElement('img');
+  img.src = './assets/images/icon-checkmark.svg';
+  img.alt = 'selected';
+  img.classList.add('tick-icon');
+  return img;
+};
+
+navDropMenu.addEventListener('click', (e) => {
+  if (e.target.classList.contains('units') && e.target.dataset.value) {
+    const type = e.target.dataset.type;
+    const value = e.target.dataset.value;
+
+    unitSettings[type] = value;
+
+    [...navDropMenu.querySelectorAll(`.units[data-type="${type}"]`)]
+      .forEach(li => {
+        li.classList.remove('selected');
+        const tick = li.querySelector('.tick-icon');
+        if (tick) tick.remove();
+      });
+
+      e.target.classList.add('selected');
+      e.target.appendChild(createTickImg());
+
+    if (lastRequest) {
+      fetchData(lastRequest.lat, lastRequest.long, lastRequest.city);
+    }
+  }
+});
 
 // LOCATION SUGGESTIONS
 // fetch as user types
@@ -184,13 +220,27 @@ let hourlyData = null;
 let lastRequest = null;
 
 const buildUrl = (lat, long) => {
-  const defaultUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto`;
+  let defaultUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=weather_code,apparent_temperature_max,apparent_temperature_min&hourly=apparent_temperature,weather_code&current=relative_humidity_2m,precipitation,wind_speed_10m,apparent_temperature,weather_code,temperature_2m&timezone=auto`;
 
-  if (unitSystem === "imperial") {
-    return `${defaultUrl}&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch`;
+  if (unitSettings.temp === 'f') {
+    defaultUrl += '&temperature_unit=fahrenheit';
   } else {
-    return defaultUrl;
+    defaultUrl += '&temperature_unit=celsius';
   }
+
+  if (unitSettings.wind === 'mph') {
+    defaultUrl += '&wind_speed_unit=mph';
+  } else {
+    defaultUrl += '&wind_speed_unit=kmh';
+  }
+
+  if (unitSettings.precip === 'in') {
+    defaultUrl += '&precipitation_unit=inch';
+  } else {
+    defaultUrl += '&precipitation_unit=mm';
+  }
+  
+  return defaultUrl;
 };
 
 const fetchData = async (lat, long, city) => {
@@ -339,25 +389,41 @@ const renderHourly = (selectedDay) => {
 };
 
 // Update Unit Toggler
-const updateUnitBtnText = () => {
-  if (unitSystem === "metric") {
-    unitToggleBtn.textContent = "Switch to Imperial";
-  } else {
-    unitToggleBtn.textContent = "Switch to Metric";
-  }
-};
-
 unitToggleBtn.addEventListener('click', () => {
-  unitSystem = unitSystem === 'metric' ? 'imperial' : 'metric';
-  updateUnitBtnText();
+  const isMetric = unitSettings.temp === 'c' && unitSettings.wind === 'kmh' && unitSettings.precip === 'mm';
 
-  navDropMenu.classList.toggle("drop-menu");
-  navChevron.style.outlineStyle = 'unset';
+  if (isMetric) {
+    unitSettings = { temp: 'f', wind: 'mph', precip: 'in' };
+    unitToggleBtn.textContent = "Switch to Metric";
+  } else {
+    unitSettings = { temp: 'c', wind: 'kmh', precip: 'mm' };
+    unitToggleBtn.textContent = "Switch to Imperial";
+  }
+
+  updateTicks();
 
   if (lastRequest) {
     fetchData(lastRequest.lat, lastRequest.long, lastRequest.city);
   }
 });
+
+function updateTicks () {
+  ['temp', 'wind', 'precip'].forEach(type => {
+    const selectedValue =unitSettings[type];
+    const items = navDropMenu.querySelectorAll(`.units[data-type="${type}"]`);
+
+    items.forEach(li => {
+      li.classList.remove('selected');
+      const tick = li.querySelector('.tick-icon');
+      if (tick) tick.remove();
+
+      if (li.dataset.value === selectedValue) {
+        li.classList.add('selected');
+        li.appendChild(createTickImg());
+      }
+    });
+  });
+}
 
 // Helpers
 const getToday = () => new Date().toISOString().split("T")[0];
@@ -372,6 +438,5 @@ window.addEventListener('resize', matchWidth);
 
 window.onload = () => {
   matchWidth();
-  updateUnitBtnText();
   fetchData(defLat, defLong, "Berlin, Germany");
 };

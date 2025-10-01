@@ -55,6 +55,10 @@
     justify-content: space-between;
   }
 
+  .units.selected {
+    @apply bg-tneutral-700
+  }
+
   .cta {
     border-radius: 1rem;
     padding: 2rem;

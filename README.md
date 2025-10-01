@@ -40,8 +40,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [github.com/Tjay05/weather-app-main](https://github.com/Tjay05/weather-app-main)
+- Live Site URL: [tjay05.github.io/weather-app-main/](https://tjay05.github.io/weather-app-main/)
 
 ## My process
 

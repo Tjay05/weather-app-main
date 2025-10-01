@@ -32,16 +32,16 @@
         <img src="assets/images/icon-dropdown.svg" alt="dropdown">
       </button>
       <ul class="menu" id="nav-dropdown-menu">
-        <button id="unit-toggle" class="text-base cursor-pointer focus:outline-1 outline-offset-1 units"></button>
+        <button id="unit-toggle" class="text-base cursor-pointer focus:outline-1 outline-offset-1 units">Switch to Imperial</button>
         <li class="text-tneutral-300 units">Temperature</li>
-        <li class="units">Celsius (°C)</li>
-        <li class="units">Fahrenheit (°F)</li>
+        <li class="units" data-type="temp" data-value="c">Celsius (°C)</li>
+        <li class="units" data-type="temp" data-value="f">Fahrenheit (°F)</li>
         <li class="text-tneutral-300 units border-t-tneutral-600 border-t-1 rounded-none pt-2">Wind Speed</li>
-        <li class="units">km/h</li>
-        <li class="units">mph</li>
+        <li class="units" data-type="wind" data-value="kmh">km/h</li>
+        <li class="units" data-type="wind" data-value="mph">mph</li>
         <li class="text-tneutral-300 units border-t-tneutral-600 border-t-1 rounded-none pt-2">Precipitation</li>
-        <li class="units">Millimeters (mm)</li>
-        <li class="units">Inches (in)</li>
+        <li class="units" data-type="precip" data-value="mm">Millimeters (mm)</li>
+        <li class="units" data-type="precip" data-value="in">Inches (in)</li>
       </ul>
     </nav>
   </header>

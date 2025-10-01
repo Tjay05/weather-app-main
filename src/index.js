@@ -126,15 +126,7 @@ navDropMenu.addEventListener('click', (e) => {
 
     unitSettings[type] = value;
 
-    [...navDropMenu.querySelectorAll(`.units[data-type="${type}"]`)]
-      .forEach(li => {
-        li.classList.remove('selected');
-        const tick = li.querySelector('.tick-icon');
-        if (tick) tick.remove();
-      });
-
-      e.target.classList.add('selected');
-      e.target.appendChild(createTickImg());
+    updateTicks();
 
     if (lastRequest) {
       fetchData(lastRequest.lat, lastRequest.long, lastRequest.city);
@@ -390,13 +382,11 @@ const renderHourly = (selectedDay) => {
 
 // Update Unit Toggler
 unitToggleBtn.addEventListener('click', () => {
-  const isMetric = unitSettings.temp === 'c' && unitSettings.wind === 'kmh' && unitSettings.precip === 'mm';
-
-  if (isMetric) {
-    unitSettings = { temp: 'f', wind: 'mph', precip: 'in' };
+  if (unitSettings.temp === "c" && unitSettings.wind === "kmh" && unitSettings.precip === "mm") {
+    unitSettings = { temp: "f", wind: "mph", precip: "in" };
     unitToggleBtn.textContent = "Switch to Metric";
   } else {
-    unitSettings = { temp: 'c', wind: 'kmh', precip: 'mm' };
+    unitSettings = { temp: "c", wind: "kmh", precip: "mm" };
     unitToggleBtn.textContent = "Switch to Imperial";
   }
 
@@ -433,6 +423,11 @@ retryBtn.addEventListener('click', () => {
     fetchData(lastRequest.lat, lastRequest.long, lastRequest.city);
   }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  unitToggleBtn.textContent = 'Switch to Imperial';
+  updateTicks();
+})
 
 window.addEventListener('resize', matchWidth);
 
